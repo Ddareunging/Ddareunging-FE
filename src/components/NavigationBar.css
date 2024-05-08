@@ -1,0 +1,37 @@
+.navigation-bar {
+  display: flex;
+  justify-content: space-around;
+  background: #FFFDF6;
+  padding: 10px 0;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #CCC; 
+}
+
+/* .nav-item .nav-icon {
+  fill: #CCC; 
+  transition: fill 0.3s ease;
+} */
+
+.nav-item.active .nav-icon {
+  fill: #37593E; /* SVG 아이콘 색상 변경 */
+}
+
+.nav-dot {
+  width: 0;
+  height: 0;
+  transition: width 0.3s ease, height 0.3s ease;
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.nav-item.active .nav-dot {
+  width: 5px;
+  height: 5px;
+  background-color: #FF0000;
+}

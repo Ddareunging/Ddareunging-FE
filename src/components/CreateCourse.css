@@ -1,0 +1,218 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    z-index: 1001;
+}
+
+.fixed-button {
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1002;
+    width: 100%;
+    background: white;
+    border-radius: 15px;
+    padding: 10px 0;
+    text-align: center;
+    color: #37593E;
+    font-size: 12px;
+    font-family: 'Pretendard';
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.body-content {
+    padding-bottom: 60px;
+}
+
+.input-style, .text-area-style {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(55, 89, 62, 0.20);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.10);
+    margin-bottom: 10px;
+}
+
+.text-area-style {
+    height: 100px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modify-course-button, .complete-course-button {
+    flex: 1; 
+    margin: 5px;
+    background: white;
+    border-radius: 15px;
+    padding: 10px 0;
+    text-align: center;
+    color: #37593E;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.input-container {
+    display: flex;
+    /* margin-top: 1px;
+    margin-bottom: 1px; */
+    margin-left: 16px;
+    margin-right: 16px;
+    justify-content: center;
+    background: #FFFDF6;
+}
+
+.input-field, .button-search, .button-add {
+    margin: 5px;
+    padding: 4px;
+    border: 1px solid white;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.20);
+}
+
+.input-field {
+    background: #FFF9E4;
+    color: #37593E;
+    width: calc(100% - 120px);
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.20);
+    /* height: 8px; */
+}
+
+.input-field::placeholder {
+    color: #37593E;
+}
+
+.button-search {
+    background-color: white; 
+    color: #37593E; 
+    cursor: pointer;
+    width: 86px;
+    height: 24px;
+    border-radius: 32px;
+    font-size: 11px;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    border: '1px white solid';
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.10);
+    margin-top: 8px;
+}
+
+.button-add {
+    background: #FFF9E4 url('./course_add_icon.svg') no-repeat center;
+    border: none;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    /* background-size: 30px 30px; */
+}
+
+.location-info {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .location-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 0;
+  }
+  
+  .location-icon {
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .search-results-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .search-result-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .place-thumbnail {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .place-info {
+    flex-grow: 1;
+  }
+  
+  .place-name {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .place-details {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  /* .modal-overlay.search-modal .modal-content {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+   */
+
+   .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow-y: auto; /* 전체 오버레이에서 스크롤 가능하게 설정 */
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%; /* 모바일에서는 폭을 조금 더 넓게 설정 */
+    max-height: 80vh; /* 최대 높이 설정 */
+    overflow-y: auto; /* 내용이 많을 경우 내부 스크롤 */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    z-index: 1001;
+}
+

@@ -1,0 +1,100 @@
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    background: #FFFDF6;
+  }
+
+  .course-banner {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .course-banner img {
+    width: 100%;
+    height: 100px;
+    display: block;
+    object-fit: cover;
+  }
+
+  .course-categories {
+    display: flex;
+    justify-content: space-around;
+    margin-top: -6px;
+    background-color: rgba(235, 239, 165, 0.5);
+  }
+  
+  .course-label {
+    color: #37593E;
+    font-size: 12px;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    padding: 10px 20px;
+  }
+
+  .course-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  
+  .my-course, .fav-course {
+    background-color: #37593E;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .course-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-top: 6px;
+  }
+  
+.tab-button {
+    background-color: #FFFDF6; /* Light background for inactive tab */
+    color: #37593E;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    border: none;
+    border-radius: 32px;
+    padding: 6px 14px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.20);
+    cursor: pointer;
+    outline: none;
+    margin-right: 10px;
+    line-height: 1;
+}
+
+.tab-button:not(:last-child) {
+    margin-right: 4px; /* Space between buttons */
+}
+
+.tab-button:nth-child(2) {
+    margin-right: 26px;
+}
+
+.tab-button.active {
+    background-color: #37593E; /* Dark green background for active tab */
+    color: white;
+}
+
+.sorting {
+    text-align: center;
+    color: rgba(55, 89, 62, 0.50);
+    font-family: 'Pretendard', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+  }
+  
+  .sorting-arrow {
+    width: 12px;
+    height: auto;
+    margin-left: 5px;
+  }

@@ -1,0 +1,68 @@
+.course-detail-container {
+    margin-bottom: 20px;
+  }
+  
+  .course-title-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .course-title {
+    margin-right: 10px;
+  }
+  
+  .like-icon {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    filter: grayscale(100%);
+  }
+  
+  .like-icon.favored {
+    filter: grayscale(0%);
+  }
+  
+  /* .location-item {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  } */
+  
+  .location-icon {
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .comments-section {
+    margin-top: 20px;
+  }
+  
+  .comment-input {
+    width: 100%; 
+  }
+  
+  .comment-submit-button {
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .view-course-button {
+    display: block; /* Ensures the button takes the full width if needed */
+    text-align: center;
+    color: #37593E;
+    font-size: 12px;
+    font-family: 'Pretendard', sans-serif; /* Ensure Pretendard font is loaded or falls back to sans-serif */
+    font-weight: 700;
+    word-wrap: break-word;
+    padding: 10px 20px;
+    margin: 10px auto; /* Centers the button horizontally */
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 15px;
+    width: auto; /* Adjust width as necessary or keep it auto */
+  }
+  

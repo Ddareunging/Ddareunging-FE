@@ -1,0 +1,18 @@
+.course-card {
+    background: white;
+    box-shadow: 1px 1px 20px 5px rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 210px; /* 높이 설정 */
+    margin: 10px; /* 여백 추가 */
+  }
+  
+  .course-link {
+    all: unset;
+    cursor: pointer;
+  }
+  

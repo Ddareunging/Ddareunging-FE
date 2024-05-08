@@ -1,0 +1,76 @@
+.homeWeather {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    position: relative;
+    background: #FFFDF6;
+}
+
+.location, .caution {
+    color: #37593E;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    font-family: 'Pretendard', sans-serif;
+    margin-bottom: 10px;
+}
+
+.weatherIconContainer {
+    margin: 0 auto;
+}
+
+.dateTemperature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px;
+    color: #37593E;
+}
+
+.dateTemperature span {
+    text-align: center;
+}
+
+.dateTemperature span:nth-child(2) {
+    font-size: 29.68px; 
+}
+
+.pollutionLevels {
+    /* display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10px;  */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.pollutionIndex {
+    font-size: 24px;
+    width: auto; 
+    margin-right: 10px;
+}
+
+.pollutionLabel, .pollutionStatusBad, .pollutionStatusNormal {
+    font-size: 13px;
+    margin: 0 10px; 
+}
+
+.pollutionStatusBad {
+    color: #FDA868;
+}
+
+.pollutionStatusNormal {
+    color: #FEC868;
+}
+
+.dataDisclaimer {
+    width: auto; 
+    color: #1F2329;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 20px; 
+    text-align: center;
+}

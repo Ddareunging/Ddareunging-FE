@@ -1,0 +1,94 @@
+.mypage-container {
+    width: 100%;
+    height: 100%;
+    background: #FFFDF6;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-section, .actions-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-image {
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 4px 2px rgba(0, 0, 0, 0.25);
+  }
+  
+  .profile-info h1 {
+    color: #37593E;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  .profile-info p {
+    color: rgba(55, 89, 62, 0.20);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .actions-section {
+    display: flex; /* Flexbox를 사용하여 내부 요소들을 행으로 정렬 */
+    flex-direction: row; /* 요소들을 수평 방향으로 배치 */
+    justify-content: space-around; /* 버튼 사이에 균등 간격 제공 */
+    width: 100%; /* 섹션의 너비를 최대로 설정 */
+    padding: 20px 0; /* 위, 아래 패딩 추가 */
+  }
+  
+  .action-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #37593E;
+    cursor: pointer;
+    margin: 10px;
+    text-align: center;
+  }
+  
+.action-icon {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 5px;
+  }
+
+  .action-text {
+    /* text-align: center; */
+    color: #37593E;
+    font-size: 14px;
+    font-family: 'Pretendard';
+    font-weight: 600;
+  }
+  
+  .links-section .link-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid rgba(55, 89, 62, 0.20);
+  }
+  
+  .links-section .link-item span {
+    font-size: 14px;
+    color: #37593E;
+    
+  }
+  
+  .links-section .link-item svg {
+    width: 8.75px;
+    height: 17px;
+  }
+  
