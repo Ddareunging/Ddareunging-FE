@@ -36,7 +36,7 @@
   
   .tab.active .underline-bar {
     position: absolute;
-    bottom: -10px; /* Adjust as needed */
+    bottom: -10px; 
     left: 50%;
     transform: translateX(-50%);
     width: 15px;

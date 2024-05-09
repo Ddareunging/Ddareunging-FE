@@ -4,38 +4,56 @@ import WeatherIcon from './weather_ex.svg';
 
 function HomeWeather() {
   const [weatherData, setWeatherData] = useState({
-    location: '00구 00동',
+    location: '',
     caution: '',
-    date: '04/18 금요일',
-    temperature: '12.6',
-    precipitation: '00',
+    date: '',
+    temperature: '',
+    precipitation: '',
     airQuality: {
-      pm10: 119,
-      pm25: 25,
-      pm10Status: '나쁨',
-      pm25Status: '보통'
+      pm10: '',
+      pm25: '',
+      pm10Status: '',
+      pm25Status: ''
     },
-    updateTime: 'OO시 OO분 기준'
+    updateTime: ''
   });
 
-  const [coords, setCoords] = useState({ latitude: '', longitude: '' }); // 임시로 상태 추가
+  // const [coords, setCoords] = useState({ latitude: '', longitude: '' });
 
   useEffect(() => {
     const fetchWeatherData = async (latitude, longitude) => {
       try {
-        const url = `BACKEND_URL/api/weather?lat=${latitude}&lon=${longitude}`;
+        console.log('test1');
+        const url = `https://ddareunging.sepnon3.shop/api/home/weather?lat=${latitude}&lng=${longitude}`;
+        console.log('test2');
         const response = await fetch(url);
+        console.log('test3');
         const data = await response.json();
-        const cautionMessage = getCautionMessage(data.precipitation);
-        setWeatherData({ ...data, caution: cautionMessage });
+        if (data.message === 'OK') {
+          const newWeatherData = {
+            location: `${data.address[0]} ${data.address[1]}`,
+            temperature: data.weather.temp,
+            precipitation: data.weather.rainAmount,
+            airQuality: {
+              pm10: data.dust.pm10Value,
+              pm25: data.dust.pm25Value,
+              pm10Status: getStatus(data.dust.pm10Grade),
+              pm25Status: getStatus(data.dust.pm25Grade)
+            },
+            updateTime: data.weather.lastUpdateTime
+          };
+          const cautionMessage = getCautionMessage(newWeatherData.precipitation);
+          setWeatherData({ ...newWeatherData, caution: cautionMessage });
+        }
       } catch (error) {
         console.error('Failed to fetch weather data:', error);
+        alert('날씨 데이터를 불러오는 데 실패했습니다.');
       }
     };
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setCoords({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+        // setCoords({ latitude: position.coords.latitude, longitude: position.coords.longitude });
         fetchWeatherData(position.coords.latitude, position.coords.longitude);
       },
       (error) => {
@@ -46,9 +64,18 @@ function HomeWeather() {
     );
   }, []); 
 
+  const getStatus = (grade) => {
+    switch (grade) {
+      case 1: return '좋음';
+      case 2: return '보통';
+      case 3: return '나쁨';
+      case 4: return '매우 나쁨';
+      default: return '알 수 없음';
+    }
+  };
+
   const getCautionMessage = (precipitation) => {
-    const precipitationValue = parseFloat(precipitation.replace('mm', ''));
-    if (precipitationValue > 0) {
+    if (precipitation > 0) {
       return '비가 와서 미끄러우니 조심하세요.';
     } else {
       const currentHour = new Date().getHours();
@@ -68,8 +95,8 @@ function HomeWeather() {
         <img src={WeatherIcon} alt="Weather Icon" />
       </div>
       <div className="dateTemperature">
-        <span>{weatherData.date}<br/></span>
-        <span>{weatherData.temperature} | </span>
+        <span>{weatherData.updateTime}<br/></span>
+        <span>{weatherData.temperature}°C | </span>
         <span>{weatherData.precipitation}mm</span>
       </div>
       <div className="pollutionLevels">
@@ -77,15 +104,11 @@ function HomeWeather() {
         <span className="pollutionIndex">{weatherData.airQuality.pm25}</span>
         <span className="pollutionLabel">미세</span>
         <span className="pollutionLabel">초미세</span>
-        <span className={`pollutionStatus ${weatherData.airQuality.pm10Status === '나쁨' ? 'pollutionStatusBad' : 'pollutionStatusNormal'}`}>{weatherData.airQuality.pm10Status}</span>
-        <span className={`pollutionStatus ${weatherData.airQuality.pm25Status === '보통' ? 'pollutionStatusNormal' : 'pollutionStatusBad'}`}>{weatherData.airQuality.pm25Status}</span>
+        <span className={`pollutionStatus ${weatherData.airQuality.pm10Status}`}>{weatherData.airQuality.pm10Status}</span>
+        <span className={`pollutionStatus ${weatherData.airQuality.pm25Status}`}>{weatherData.airQuality.pm25Status}</span>
       </div>
       <div className="dataDisclaimer">
         <span>{weatherData.updateTime}</span>
-      </div>
-      <div className="coordinates">
-        <p>위도: {coords.latitude}</p>
-        <p>경도: {coords.longitude}</p>
       </div>
     </div>
   );

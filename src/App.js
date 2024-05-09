@@ -1,7 +1,7 @@
 import './App.css';
 import './components/Map.css';
-import React, {useState, useEffect} from 'react';
-import logo from './logo.svg';
+import React from 'react';
+// import logo from './logo.svg';
 // import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import Login from './components/Login';
@@ -19,27 +19,39 @@ const CourseDetail = React.lazy(() => import('./components/CourseDetail'));
 function App() {
   // const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState([]);
 
-    useEffect(() => {
-      fetch('/test/hello')
-          .then(response => response.text())
-          .then(message => {
-              setMessage(message);
-          });
-    },[])
+  //   useEffect(() => {
+  //       fetch("/hello")
+  //           .then((response) => {
+  //               return response.json();
+  //           })
+  //           .then(function (data) {
+  //               setMessage(data);
+  //           });
+  //   }, []);
 
   return (
     <Router>
-      <div className="App">
-          <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo"/>
-              <h1 className="App-title">{message}</h1>
-          </header>
-          <p className="App-intro">
-              To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
-      </div>
+      {/* <div className="App">
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo"/>
+                <p>
+                    Edit <code>src/App.js</code> and save to reload.
+                </p>
+                <a
+                    className="App-link"
+                    href="https://reactjs.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Learn React
+                </a>
+                <ul>
+                    {message.map((text, index) => <li key={`${index}-${text}`}>{text}</li>)}
+                </ul>
+            </header>
+        </div> */}
       <React.Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="*" element={<NotFound />} />

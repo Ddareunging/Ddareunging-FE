@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import CourseTour from './CourseTour';
+import CourseSeason from './CourseSeason';
 import CourseMy from './CourseMy';
 import CourseFav from './CourseFav';
 import Slider from 'react-slick';
@@ -20,11 +22,10 @@ const CourseCommunity = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
-    // cssEase: "linear"
   };
 
   return (
-    <div className="container">
+    <div className="course-community-container">
       <div className="course-banner">
         <Slider {...settings}>
           <div>
@@ -40,12 +41,41 @@ const CourseCommunity = () => {
       </div>
 
       <div className="course-categories">
-        <div className="course-label">관광 코스</div>
-        <div className="course-label">계절 코스</div>
-        <div className="course-label">나만의 코스</div>
+        <button onClick={() => handleTabChange('courseTour')} className={selectedTab === 'courseTour' ? 'active' : ''}>
+          관광 코스
+        </button>
+        <button onClick={() => handleTabChange('courseSeason')} className={selectedTab === 'courseSeason' ? 'active' : ''}>
+          계절 코스
+        </button>
+        <button onClick={() => handleTabChange('courseMy')} className={selectedTab === 'courseMy' ? 'active' : ''}>
+          나만의 코스
+        </button>
       </div>
 
-      <div className="course-controls">
+      {selectedTab === 'courseTour' && <CourseTour />}
+      {selectedTab === 'courseSeason' && <CourseSeason />}
+      {selectedTab === 'courseMy' && <CourseMy />}
+
+      {selectedTab === 'courseMy' && <CourseMy />}
+      {selectedTab === 'courseFav' && <CourseFav />}
+
+      {selectedTab === 'courseMy' && (
+        <div className="course-sub-categories">
+          <button onClick={() => handleTabChange('courseMy')} className={selectedTab === 'courseMy' ? 'active' : ''}>
+            나만의 코스
+          </button>
+          <button onClick={() => handleTabChange('courseFav')} className={selectedTab === 'courseFav' ? 'active' : ''}>
+            찜한 코스
+          </button>
+          <div className="sorting">
+            정렬
+            <img src={sortIcon} alt="Down Arrow" className="sorting-arrow" />
+          </div>
+        </div>
+        
+      )}
+
+      {/* <div className="course-controls">
         <button className={`tab-button ${selectedTab === 'courseMy' ? 'active' : ''}`} onClick={() => handleTabChange('courseMy')}>
           나만의 코스
         </button>
@@ -56,12 +86,10 @@ const CourseCommunity = () => {
           정렬
           <img src={sortIcon} alt="Down Arrow" className="sorting-arrow" />
         </div>
-      </div>
+      </div> */}
   
-      {selectedTab === 'courseMy' && <CourseMy />}
-      {selectedTab === 'courseFav' && <CourseFav />}
-
-      
+      {/* {selectedTab === 'courseMy' && <CourseMy />}
+      {selectedTab === 'courseFav' && <CourseFav />} */}
     </div>
   );
 };

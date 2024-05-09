@@ -42,6 +42,7 @@ const CourseDetail = () => {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
+      event.preventDefault();  
       handleCommentSubmit();
     }
   };
@@ -60,7 +61,7 @@ const CourseDetail = () => {
   };
 
   const viewCourseMap = () => {
-    navigate('/map', { state: { course } });
+    navigate('/map', { state: { course: course.places } });
   };
 
   if (!course) {
