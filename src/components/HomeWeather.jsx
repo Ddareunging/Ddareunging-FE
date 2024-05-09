@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './HomeWeather.css'; 
-import WeatherIcon from './weather_ex.svg';
+import weatherRain from './weather_rain.svg';
+import weatherDay from './weather_day.svg';
+import weatherNight from './weather_night.svg';
 
 function HomeWeather() {
   const [weatherData, setWeatherData] = useState({
@@ -17,8 +19,6 @@ function HomeWeather() {
     },
     updateTime: ''
   });
-
-  // const [coords, setCoords] = useState({ latitude: '', longitude: '' });
 
   useEffect(() => {
     const fetchWeatherData = async (latitude, longitude) => {
@@ -53,7 +53,7 @@ function HomeWeather() {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // setCoords({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+
         fetchWeatherData(position.coords.latitude, position.coords.longitude);
       },
       (error) => {
@@ -74,6 +74,18 @@ function HomeWeather() {
     }
   };
 
+  const getWeatherIcon = (precipitation) => {
+    const currentHour = new Date().getHours();
+    if (precipitation > 0) {
+      return weatherRain;
+    } else if (currentHour >= 5 && currentHour <= 18) {
+      return weatherDay;
+    } else {
+      return weatherNight;
+    }
+  };
+
+
   const getCautionMessage = (precipitation) => {
     if (precipitation > 0) {
       return '비가 와서 미끄러우니 조심하세요.';
@@ -91,21 +103,23 @@ function HomeWeather() {
     <div className="homeWeather">      
       <div className="location">{weatherData.location}</div>
       <div className="caution">{weatherData.caution}</div>
-      <div className="weatherIconContainer">
-        <img src={WeatherIcon} alt="Weather Icon" />
-      </div>
-      <div className="dateTemperature">
-        <span>{weatherData.updateTime}<br/></span>
-        <span>{weatherData.temperature}°C | </span>
-        <span>{weatherData.precipitation}mm</span>
-      </div>
-      <div className="pollutionLevels">
-        <span className="pollutionIndex">{weatherData.airQuality.pm10}</span>
-        <span className="pollutionIndex">{weatherData.airQuality.pm25}</span>
-        <span className="pollutionLabel">미세</span>
-        <span className="pollutionLabel">초미세</span>
-        <span className={`pollutionStatus ${weatherData.airQuality.pm10Status}`}>{weatherData.airQuality.pm10Status}</span>
-        <span className={`pollutionStatus ${weatherData.airQuality.pm25Status}`}>{weatherData.airQuality.pm25Status}</span>
+      <div className="weatherContainer">
+        <div className="weatherIconContainer">
+          <img src={getWeatherIcon(weatherData.precipitation)} alt="Weather Icon" />
+        </div>
+        <div className="dateTemperature">
+          <span>{weatherData.updateTime}<br/></span>
+          <span>{weatherData.temperature}°C | </span>
+          <span>{weatherData.precipitation}mm</span>
+        </div>
+        <div className="pollutionLevels">
+          <span className="pollutionIndex">{weatherData.airQuality.pm10}</span>
+          <span className="pollutionIndex">{weatherData.airQuality.pm25}</span>
+          <span className="pollutionLabel">미세</span>
+          <span className="pollutionLabel">초미세</span>
+          <span className={`pollutionStatus ${weatherData.airQuality.pm10Status}`}>{weatherData.airQuality.pm10Status}</span>
+          <span className={`pollutionStatus ${weatherData.airQuality.pm25Status}`}>{weatherData.airQuality.pm25Status}</span>
+        </div>
       </div>
       <div className="dataDisclaimer">
         <span>{weatherData.updateTime}</span>

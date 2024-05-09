@@ -1,8 +1,8 @@
-.container {
-    max-width: 100%;
-    margin: 0 auto;
-    background: #FFFDF6;
-  }
+.course-community-container {
+  max-width: 100%;
+  margin: 0 auto;
+  background: #FFFDF6;
+}
 
   .course-banner {
     width: 100%;
@@ -22,39 +22,40 @@
     margin-top: -6px;
     background-color: rgba(235, 239, 165, 0.5);
   }
-  
-  .course-label {
-    color: #37593E;
-    font-size: 12px;
+
+  .course-categories button {
+    background-color: transparent;
+    color: #37593E; 
     font-family: 'Pretendard', sans-serif;
+    font-size: 12px;
     font-weight: 600;
-    padding: 10px 20px;
-  }
-
-  .course-buttons {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-  }
-  
-  .my-course, .fav-course {
-    background-color: #37593E;
-    color: white;
-    padding: 10px 20px;
+    border: none;
     border-radius: 20px;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-  }
-
-  .course-controls {
+    padding: 8px 16px;
+    margin: 5px;
+    cursor: pointer;
+    position: relative;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
     align-items: center;
-    width: 100%;
-    margin-top: 6px;
-  }
+}
+
+.tab-indicator {
+  width: 28%;
+  height: 3px;
+  background: #37593E;
+  border-radius: 1.50px;
+  position: absolute; 
+  bottom: -5px;
+}
+
+/* .course-categories button.active {
+  background-color: #37593E;
+  color: white;
+} */
   
 .tab-button {
-    background-color: #FFFDF6; /* Light background for inactive tab */
+    background-color: #FFFDF6; 
     color: #37593E;
     font-family: 'Pretendard', sans-serif;
     font-size: 11px;
@@ -98,3 +99,9 @@
     height: auto;
     margin-left: 5px;
   }
+
+
+  .active {
+    font-weight: bold;
+  }
+  
