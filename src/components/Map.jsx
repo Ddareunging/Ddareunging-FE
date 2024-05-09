@@ -5,7 +5,8 @@ import locIcon from './map_loc_icon.svg';
 
 function Map() {
   const mapInstance = useRef(null);
-  const pinInstance = useRef([]);
+  const pinInstance = useRef(null);
+  const stationPins = useRef([]);
   const currentLocation = useRef({ latitude: null, longitude: null });
 
   // 지도 초기화
@@ -35,10 +36,7 @@ function Map() {
       });
 
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-          setCurrentLocation(position);
-          fetchStations();
-        }, console.error);
+        navigator.geolocation.getCurrentPosition(setCurrentLocation, console.error);
       }
       
       mapInstance.current.addListener('bounds_changed', fetchStations);
@@ -51,7 +49,6 @@ function Map() {
     const nw = bounds.getNorthWest(); // 북서쪽 경계
     const se = bounds.getSouthEast(); // 남동쪽 경계
     
-  
     try {
       const response = await fetch(`/map?startLat=${se.lat()}&endLat=${nw.lat()}&startLng=${nw.lng()}&endLng=${se.lng()}`);
       const data = await response.json();
@@ -63,15 +60,12 @@ function Map() {
     } catch (error) {
       console.error('데이터 불러오기 실패:', error);
     }
-
   };
   
   const addStationMarkers = (stations) => {
-    // 기존 마커들을 지도에서 제거
-    pinInstance.current.forEach(pin => pin.setMap(null));
-    pinInstance.current = [];
+    stationPins.current.forEach(pin => pin.setMap(null));
+    stationPins.current = [];
 
-    // 새로운 마커들 추가
     stations.forEach(station => {
       const { myLat, myLng } = station;
       const marker = new window.Tmapv2.Marker({
@@ -79,11 +73,10 @@ function Map() {
         map: mapInstance.current,
         icon: pinIcon
       });
-      pinInstance.current.push(marker); // 마커를 배열에 저장하여 관리
+      stationPins.current.push(marker);
     });
   };
   
-
   useEffect(() => {
     const existingScript = document.querySelector('script[src*="tmap/js"]');
     if (existingScript) {
