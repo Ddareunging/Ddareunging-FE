@@ -134,22 +134,37 @@ function CreateCourse() {
     };
     
     function updatePin(index, latLng, placeInfo, isWaypoint = true) {
-      const pinKey = isWaypoint ? 'waypoint' : index; 
-      if (pins.current[pinKey][index]) {
-        pins.current[pinKey][index].setPosition(latLng);
+      let pinKey = isWaypoint ? 'waypoint' : index;
+      if (!isWaypoint) {
+        if (pins.current[pinKey]) {
+          pins.current[pinKey].setPosition(latLng);
+        } else {
+          pins.current[pinKey] = new window.Tmapv2.Marker({
+            position: latLng,
+            map: mapInstance.current,
+            icon: pinIcon
+          });
+        }
+        setSelectedPlaces(prev => {
+          return { ...prev, [pinKey]: placeInfo };
+        });
       } else {
-        pins.current[pinKey][index] = new window.Tmapv2.Marker({
-          position: latLng,
-          map: mapInstance.current,
-          icon: pinIcon
+        if (pins.current[pinKey][index]) {
+          pins.current[pinKey][index].setPosition(latLng);
+        } else {
+          pins.current[pinKey][index] = new window.Tmapv2.Marker({
+            position: latLng,
+            map: mapInstance.current,
+            icon: pinIcon
+          });
+        }
+        setSelectedPlaces(prev => {
+          const updatedPlaces = [...prev.waypoint];
+          updatedPlaces[index] = placeInfo;
+          return { ...prev, waypoint: updatedPlaces };
         });
       }
-      setSelectedPlaces(prev => {
-        const updatedPlaces = isWaypoint ? [...prev.waypoint] : {...prev};
-        updatedPlaces[index] = placeInfo;
-        return { ...prev, [pinKey]: updatedPlaces };
-      });
-    }
+    }    
     
     const addWaypoint = () => {
       const newWaypoints = [...searchTerms.waypoint, ''];

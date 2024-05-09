@@ -5,7 +5,7 @@ import locIcon from './map_loc_icon.svg';
 
 function Map() {
   const mapInstance = useRef(null);
-  const pinInstance = useRef(null);
+  const pinInstance = useRef([]);
   const currentLocation = useRef({ latitude: null, longitude: null });
 
   // 지도 초기화
@@ -41,12 +41,9 @@ function Map() {
         }, console.error);
       }
       
-      mapInstance.current.addListener('bounds_changed', () => {
-        fetchStations(); 
-      });
-      
+      mapInstance.current.addListener('bounds_changed', fetchStations);
     }
-  }, []); 
+  }, []);
 
   // 정류장 데이터 가져옴
   const fetchStations = async () => {
@@ -56,12 +53,10 @@ function Map() {
     
   
     try {
-      const response = await fetch(`/map?startLat=${nw.lat()}&endLat=${se.lat()}&startLng=${nw.lng()}&endLng=${se.lng()}`);
-      console.log(`test  /map?startLat=${se.lat()}&endLat=${nw.lat()}&startLng=${nw.lng()}&endLng=${se.lng()}`);
+      const response = await fetch(`/map?startLat=${se.lat()}&endLat=${nw.lat()}&startLng=${nw.lng()}&endLng=${se.lng()}`);
       const data = await response.json();
-      console.log(data);
-      if (data.stations) {
-        addStationMarkers(data.respostations);
+      if (data.length>0) {
+        addStationMarkers(data);
       } else {
         console.error('대여소없음');
       }
@@ -72,23 +67,21 @@ function Map() {
   };
   
   const addStationMarkers = (stations) => {
-    // 이전 마커들을 지도에서 제거
-    if (pinInstance.current) {
-      pinInstance.current.forEach(pin => pin.setMap(null));
-      pinInstance.current = [];
-    }
-  
+    // 기존 마커들을 지도에서 제거
+    pinInstance.current.forEach(pin => pin.setMap(null));
+    pinInstance.current = [];
+
     // 새로운 마커들 추가
     stations.forEach(station => {
+      const { myLat, myLng } = station;
       const marker = new window.Tmapv2.Marker({
-        position: new window.Tmapv2.LatLng(station.myLat, station.myLng),
+        position: new window.Tmapv2.LatLng(myLat, myLng),
         map: mapInstance.current,
         icon: pinIcon
       });
       pinInstance.current.push(marker); // 마커를 배열에 저장하여 관리
     });
   };
-  
   
 
   useEffect(() => {

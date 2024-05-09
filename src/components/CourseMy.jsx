@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './CourseMy.css'; 
 import { ReactComponent as ProfileIcon } from './profile_icon.svg';
 
+
 const CourseMy = () => {
   const [courses, setCourses] = useState([]);
 
