@@ -32,7 +32,7 @@ function CreateCourse() {
   const [selectedPlaces, setSelectedPlaces] = useState({ start: null, waypoint: [], destination: null });
   const [courseTitle, setCourseTitle] = useState('');
   const [courseDescription, setCourseDescription] = useState('');
-  const [courseImage, setCourseImage] = useState(null);
+  const [courseImage, setCourseImage] = useState('/basic_img.png');
 
     const initTmap = useCallback(() => {
       const setCurrentLocation = (position) => {
@@ -175,6 +175,8 @@ function CreateCourse() {
     const handleImageChange = (event) => {
       if (event.target.files && event.target.files[0]) {
         setCourseImage(event.target.files[0]);
+      }else {
+        setCourseImage('/basic_img.png'); // Reset to default if no file is selected
       }
     };
 
@@ -182,7 +184,7 @@ function CreateCourse() {
       const reader = new FileReader();
       
       reader.onload = function () {
-        const base64Image = reader.result;
+        const base64Image = reader.result || courseImage;
     
         console.log("Course Title:", courseTitle);
         console.log("Course Description:", courseDescription);
@@ -210,11 +212,10 @@ function CreateCourse() {
         setCourseModalOpen(false);
       };
     
-      if (courseImage) {
-        reader.readAsDataURL(courseImage);
+      if (courseImage && courseImage !== '/basic_img.png') {
+        reader.readAsDataURL(courseImage); // Only read if a new image was uploaded
       } else {
-        // Handle case where no image is uploaded
-        console.error('No image uploaded');
+        reader.onload(); // Trigger onload manually with the default image
       }
     };
     

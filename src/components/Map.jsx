@@ -8,11 +8,11 @@ function Map() {
   const pinInstance = useRef(null);
   const currentLocation = useRef({ latitude: null, longitude: null });
 
-  // 지도를 초기화하는 함수
+  // 지도 초기화
   const initTmap = useCallback(() => {
     const setCurrentLocation = (position) => {
       const { latitude, longitude } = position.coords;
-      currentLocation.current = { latitude, longitude }; //
+      currentLocation.current = { latitude, longitude }; 
       mapInstance.current.setCenter(new window.Tmapv2.LatLng(latitude, longitude));
 
       if (!pinInstance.current) {
@@ -35,12 +35,61 @@ function Map() {
       });
 
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(setCurrentLocation, console.error);
-      } else {
-        console.error('Geolocation is not supported by this browser.');
+        navigator.geolocation.getCurrentPosition(position => {
+          setCurrentLocation(position);
+          fetchStations();
+        }, console.error);
       }
+      
+      mapInstance.current.addListener('bounds_changed', () => {
+        fetchStations(); 
+      });
+      
     }
   }, []); 
+
+  // 정류장 데이터 가져옴
+  const fetchStations = async () => {
+    const bounds = mapInstance.current.getBounds(); // 지도의 현재 경계
+    const nw = bounds.getNorthWest(); // 북서쪽 경계
+    const se = bounds.getSouthEast(); // 남동쪽 경계
+    
+  
+    try {
+      const response = await fetch(`/map?startLat=${nw.lat()}&endLat=${se.lat()}&startLng=${nw.lng()}&endLng=${se.lng()}`);
+      console.log(`test  /map?startLat=${se.lat()}&endLat=${nw.lat()}&startLng=${nw.lng()}&endLng=${se.lng()}`);
+      const data = await response.json();
+      console.log(data);
+      if (data.stations) {
+        addStationMarkers(data.respostations);
+      } else {
+        console.error('대여소없음');
+      }
+    } catch (error) {
+      console.error('데이터 불러오기 실패:', error);
+    }
+
+  };
+  
+  const addStationMarkers = (stations) => {
+    // 이전 마커들을 지도에서 제거
+    if (pinInstance.current) {
+      pinInstance.current.forEach(pin => pin.setMap(null));
+      pinInstance.current = [];
+    }
+  
+    // 새로운 마커들 추가
+    stations.forEach(station => {
+      const marker = new window.Tmapv2.Marker({
+        position: new window.Tmapv2.LatLng(station.myLat, station.myLng),
+        map: mapInstance.current,
+        icon: pinIcon
+      });
+      pinInstance.current.push(marker); // 마커를 배열에 저장하여 관리
+    });
+  };
+  
+  
 
   useEffect(() => {
     const existingScript = document.querySelector('script[src*="tmap/js"]');

@@ -1,37 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
 
 function Login({ setIsLoggedIn }) {
+  const [isSdkLoaded, setIsSdkLoaded] = useState(false);
+
   useEffect(() => {
+    if (window.Kakao && window.Kakao.isInitialized()) {
+      console.log("Kakao SDK already initialized");
+      setIsSdkLoaded(true);
+      return;
+    }
+
     const script = document.createElement('script');
     script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-    document.head.appendChild(script);
-
     script.onload = () => {
       window.Kakao.init(process.env.REACT_APP_KAKAO_REST_API_KEY);
       if (window.Kakao.isInitialized()) {
         console.log("Kakao SDK initialized");
+        setIsSdkLoaded(true);
       }
     };
+    script.onerror = () => {
+      alert("Kakao SDK script failed to load.");
+    };
 
-    return () => document.head.removeChild(script);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
   }, []);
 
-  const handleLogin = async () => {
-    try {
-      window.Kakao.Auth.login({
-        success: function(authObj) {
-          console.log(authObj);
-          setIsLoggedIn(true);
-          window.location.href = process.env.REACT_APP_KAKAO_REDIRECT_URI; 
-        },
-        fail: function(err) {
-          alert(JSON.stringify(err));
-        }
-      });
-    } catch (err) {
-      console.error(err);
+  const handleLogin = () => {
+    if (!isSdkLoaded) {
+      alert("Kakao SDK not loaded. Please wait and try again.");
+      return;
     }
+
+    window.Kakao.Auth.authorize({
+      redirectUri: process.env.REACT_APP_KAKAO_REDIRECT_URI,
+      success: function(authObj) {
+        console.log(authObj);
+        setIsLoggedIn(true); 
+      },
+      fail: function(err) {
+        alert(JSON.stringify(err));
+        setIsLoggedIn(false); 
+      }
+    });
   };
 
   return (
@@ -45,3 +61,4 @@ function Login({ setIsLoggedIn }) {
 }
 
 export default Login;
+

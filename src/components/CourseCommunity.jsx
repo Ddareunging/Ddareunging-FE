@@ -6,9 +6,13 @@ import CourseFav from './CourseFav';
 import Slider from 'react-slick';
 import './CourseCommunity.css';
 import sortIcon from './course_downarrow_icon.svg';
+import { useLocation } from 'react-router-dom';
 
 const CourseCommunity = () => {
-  const [selectedTab, setSelectedTab] = useState('courseTour');
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const initialTab = query.get('tab') || 'courseTour';
+  const [selectedTab, setSelectedTab] = useState(initialTab);
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);

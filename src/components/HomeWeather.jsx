@@ -3,6 +3,14 @@ import './HomeWeather.css';
 import weatherRain from './weather_rain.svg';
 import weatherDay from './weather_day.svg';
 import weatherNight from './weather_night.svg';
+import weatherFineGood from './weather_fine_good.svg';
+import weatherFineFair from './weather_fine_fair.svg';
+import weatherFineBad from './weather_fine_bad.svg';
+import weatherFineVeryBad from './weather_fine_verybad.svg';
+import weatherUltraGood from './weather_ultra_good.svg';
+import weatherUltraFair from './weather_ultra_fair.svg';
+import weatherUltraBad from './weather_ultra_bad.svg';
+import weatherUltraVeryBad from './weather_ultra_verybad.svg';
 
 function HomeWeather() {
   const [weatherData, setWeatherData] = useState({
@@ -19,8 +27,7 @@ function HomeWeather() {
     },
     updateTime: ''
   });
-
-  useEffect(() => {
+  
     const fetchWeatherData = async (latitude, longitude) => {
       try {
         console.log('test1');
@@ -51,18 +58,19 @@ function HomeWeather() {
       }
     };
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-
-        fetchWeatherData(position.coords.latitude, position.coords.longitude);
-      },
-      (error) => {
-        console.error('Geolocation failed:', error);
-        alert('위치 정보를 가져오는 데 실패했습니다.');
-      },
-      { enableHighAccuracy: true }
-    );
-  }, []); 
+    useEffect(() => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+  
+          fetchWeatherData(position.coords.latitude, position.coords.longitude);
+        },
+        (error) => {
+          console.error('Geolocation failed:', error);
+          alert('위치 정보를 가져오는 데 실패했습니다.');
+        },
+        { enableHighAccuracy: true }
+      );
+    }, []); 
 
   const getStatus = (grade) => {
     switch (grade) {
@@ -82,6 +90,36 @@ function HomeWeather() {
       return weatherDay;
     } else {
       return weatherNight;
+    }
+  };
+
+  const getFineDustIcon = (status) => {
+    switch (status) {
+      case '좋음':
+        return weatherFineGood;
+      case '보통':
+        return weatherFineFair;
+      case '나쁨':
+        return weatherFineBad;
+      case '매우 나쁨':
+        return weatherFineVeryBad;
+      default:
+        return ''; 
+    }
+  };
+
+  const getUltraFineDustIcon = (status) => {
+    switch (status) {
+      case '좋음':
+        return weatherUltraGood;
+      case '보통':
+        return weatherUltraFair;
+      case '나쁨':
+        return weatherUltraBad;
+      case '매우 나쁨':
+        return weatherUltraVeryBad;
+      default:
+        return ''; 
     }
   };
 
@@ -113,12 +151,12 @@ function HomeWeather() {
           <span>{weatherData.precipitation}mm</span>
         </div>
         <div className="pollutionLevels">
-          <span className="pollutionIndex">{weatherData.airQuality.pm10}</span>
+        <span className="pollutionIndex">{weatherData.airQuality.pm10}</span>
           <span className="pollutionIndex">{weatherData.airQuality.pm25}</span>
           <span className="pollutionLabel">미세</span>
           <span className="pollutionLabel">초미세</span>
-          <span className={`pollutionStatus ${weatherData.airQuality.pm10Status}`}>{weatherData.airQuality.pm10Status}</span>
-          <span className={`pollutionStatus ${weatherData.airQuality.pm25Status}`}>{weatherData.airQuality.pm25Status}</span>
+          <img src={getFineDustIcon(weatherData.airQuality.pm10Status)} alt="Fine Dust Status" className="pollutionStatus" />
+          <img src={getUltraFineDustIcon(weatherData.airQuality.pm25Status)} alt="Ultra Fine Dust Status" className="pollutionStatus" />
         </div>
       </div>
       <div className="dataDisclaimer">

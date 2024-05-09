@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ReactComponent as LikeIcon } from './my_like_icon.svg';
 import { ReactComponent as CommentIcon } from './my_comment_icon.svg';
 import { ReactComponent as ArrowIcon } from './my_arrow_icon.svg';
@@ -46,10 +47,10 @@ function MyPage() {
         </div>
       </div>
       <div className="actions-section">
-        <button className="action-button">
-          <LikeIcon className="action-icon" />
-          <div className="action-text">찜한 코스 / 나만의 코스</div>
-        </button>
+        <Link to="/community?tab=courseMy" className="action-button"> 
+            <LikeIcon className="action-icon" />
+            <div className="action-text">찜한 코스 / 나만의 코스</div>
+          </Link>
         <button className="action-button">
           <CommentIcon className="action-icon" />
           <div className="action-text">내가 작성한 댓글</div>
