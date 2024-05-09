@@ -53,11 +53,13 @@ const CourseCommunity = () => {
 
       {(selectedTab === 'courseMy' || selectedTab === 'courseFav') && (
         <div className="course-controls">
-          <button onClick={() => handleTabChange('courseMy')} className={`tab-button ${selectedTab === 'courseMy' ? 'active' : ''}`}>나만의 코스</button>
-<button onClick={() => handleTabChange('courseFav')} className={`tab-button ${selectedTab === 'courseFav' ? 'active' : ''}`}>찜한 코스</button>
-          <div className="sorting">
-            정렬
-            <img src={sortIcon} alt="Down Arrow" className="sorting-arrow" />
+          <div className="controls-right">
+            <button onClick={() => handleTabChange('courseMy')} className={`tab-button ${selectedTab === 'courseMy' ? 'active' : ''}`}>나만의 코스</button>
+            <button onClick={() => handleTabChange('courseFav')} className={`tab-button ${selectedTab === 'courseFav' ? 'active' : ''}`}>찜한 코스</button>
+            <div className="sorting">
+              정렬
+              <img src={sortIcon} alt="Down Arrow" className="sorting-arrow" />
+            </div>
           </div>
         </div>
       )}
