@@ -9,13 +9,13 @@ const CourseMy = () => {
 
   // 더미 데이터 추가
   const initialCourses = [
-    { id: '1', title: '바쁜 도심 속, 청계천을 달려볼까?', profile: defaultProfile, image: 'https://example.com/path/to/image1.jpg' },
-    { id: '2', title: '서울의 도심을 흐르는 한강', profile: defaultProfile, image: 'https://example.com/path/to/image2.jpg' },
-    { id: '3', title: '한강 남북통일', profile: '따릉이좋아요', image: 'https://example.com/path/to/image2.jpg' },
-    { id: '4', title: '남한강 풀코스', profile: '따릉이좋아요', image: 'https://example.com/path/to/image2.jpg' },
-    { id: '5', title: '벚꽃 명소 양재천, 따릉이와 함께!', profile: '따릉이좋아요', image: 'https://example.com/path/to/image2.jpg' },
-    { id: '6', title: '서울 4대궁을 한번에!', profile: defaultProfile, image: 'https://example.com/path/to/image2.jpg' },
-    { id: '7', title: '송파? 나만 따라와.', profile: defaultProfile, image: 'https://example.com/path/to/image2.jpg' }
+    { id: '1', title: '바쁜 도심 속, 청계천을 달려볼까?', profile: defaultProfile, image: '/public/ch.jpg' },
+    { id: '2', title: '서울의 도심을 흐르는 한강', profile: defaultProfile, image: '/public/si.jpg' },
+    { id: '3', title: '한강 남북통일', profile: defaultProfile, image: '/public/mang.jpg' },
+    { id: '4', title: '남한강 풀코스', profile: defaultProfile, image: '/public/south_han2.jpg' },
+    { id: '5', title: '벚꽃 명소 양재천, 따릉이와 함께!', profile: defaultProfile, image: '/public/yang.jpg' },
+    { id: '6', title: '서울 4대궁을 한번에!', profile: defaultProfile, image: '/public/gung.jpg' },
+    { id: '7', title: '송파? 나만 따라와.', profile: defaultProfile, image: '/public/song.jpg' }
   ];
 
   const [courses, setCourses] = useState([{ id: 'create_new', title: '나만의 코스 만들기' }, ...initialCourses]);
