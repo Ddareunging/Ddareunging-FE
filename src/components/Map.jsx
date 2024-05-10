@@ -1,4 +1,7 @@
+// // 기존 코드
+
 import React, { useEffect, useRef, useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Map.css';
 import pinIcon from './course_pin_icon.svg';
 import locIcon from './map_loc_icon.svg';
@@ -8,7 +11,33 @@ function Map() {
   const pinInstance = useRef(null);
   const stationPins = useRef([]);
   const currentLocation = useRef({ latitude: null, longitude: null });
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  const searchParams = new URLSearchParams(location.search);
+  const startLat = parseFloat(searchParams.get('startLat')) || 37.570028;
+  const startLng = parseFloat(searchParams.get('startLng')) || 126.986072;
+
+  // 정류장 데이터 가져옴
+  const fetchStations = async () => {
+    const bounds = mapInstance.current.getBounds(); // 지도의 현재 경계
+    const nw = bounds.getNorthWest(); // 북서쪽 경계
+    const se = bounds.getSouthEast(); // 남동쪽 경계
+    
+    try {
+      const response = await fetch(`/map?startLat=${se.lat()}&endLat=${nw.lat()}&startLng=${nw.lng()}&endLng=${se.lng()}`);
+      const data = await response.json();
+      if (data.length>0) {
+        addStationMarkers(data);
+      } else {
+        console.error('대여소없음');
+      }
+    } catch (error) {
+      console.error('데이터 불러오기 실패:', error);
+    }
+  };
+
+  
   // 지도 초기화
   const initTmap = useCallback(() => {
     const setCurrentLocation = (position) => {
@@ -30,7 +59,7 @@ function Map() {
 
     if (!mapInstance.current && window.Tmapv2 && window.Tmapv2.Map) {
       mapInstance.current = new window.Tmapv2.Map("map_div", {
-        center: new window.Tmapv2.LatLng(37.570028, 126.986072),
+        center: new window.Tmapv2.LatLng(startLat, startLng),
         width: '100%',
         height: '100vh'
       });
@@ -39,28 +68,16 @@ function Map() {
         navigator.geolocation.getCurrentPosition(setCurrentLocation, console.error);
       }
       
-      mapInstance.current.addListener('bounds_changed', fetchStations);
+      mapInstance.current.addListener('bounds_changed', () => {
+        const bounds = mapInstance.current.getBounds();
+        const se = bounds.getSouthEast();
+        const nw = bounds.getNorthWest();
+        navigate(`/map?startLat=${se.lat()}&endLat=${nw.lat()}&startLng=${nw.lng()}&endLng=${se.lng()}`, { replace: true });
+        fetchStations(); // 지도 경계가 변경될 때마다 호출
+      });
     }
-  }, []);
+  }, [navigate, fetchStations]);
 
-  // 정류장 데이터 가져옴
-  const fetchStations = async () => {
-    const bounds = mapInstance.current.getBounds(); // 지도의 현재 경계
-    const nw = bounds.getNorthWest(); // 북서쪽 경계
-    const se = bounds.getSouthEast(); // 남동쪽 경계
-    
-    try {
-      const response = await fetch(`/map?startLat=${se.lat()}&endLat=${nw.lat()}&startLng=${nw.lng()}&endLng=${se.lng()}`);
-      const data = await response.json();
-      if (data.length>0) {
-        addStationMarkers(data);
-      } else {
-        console.error('대여소없음');
-      }
-    } catch (error) {
-      console.error('데이터 불러오기 실패:', error);
-    }
-  };
   
   const addStationMarkers = (stations) => {
     stationPins.current.forEach(pin => pin.setMap(null));
