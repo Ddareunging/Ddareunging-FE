@@ -19,7 +19,7 @@ const CourseSeason = () => {
           <div key={course.id} className="course-card">
             <Link to={`/season-course-detail/${course.id}`} className="course-link">
               <div className="course-info">
-                <img src={course.image} alt="Course Icon" className="course-icon" />
+                <img src={course.image} alt="Course Thumbnail" className="course-thumbnail" />
                 <div className="course-title">{course.title}</div>
                 <div className="profile-section">
                 <ProfileIcon className="profile-icon"/>
