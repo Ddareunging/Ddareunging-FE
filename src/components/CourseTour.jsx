@@ -9,9 +9,9 @@ const TourCourse = () => {
   const tourCourses = [
     { id: '1', title: '바쁜 도심 속, 청계천을 달려볼까?', profile: defaultProfile, image: '/public/ch.jpg' },
     { id: '2', title: '한강 남북통일', profile: defaultProfile, image: '/public/mang.jpg' },
-    { id: '3', title: '남한강 풀코스', profile: defaultProfile, image: '/public/south_han2.jpg' },
+    { id: '3', title: '남한강 풀코스', profile: '따릉따릉따릉잉', image: '/public/south_han2.jpg' },
     { id: '4', title: '서울 4대궁을 한번에!', profile: defaultProfile, image: '/public/gung.jpg' },
-    { id: '5', title: '송파? 나만 따라와.', profile: defaultProfile, image: '/public/song.jpg' }
+    { id: '5', title: '송파? 나만 따라와.', profile: '따릉따릉따릉잉', image: '/public/song.jpg' }
   ];
 
   return (
@@ -21,7 +21,7 @@ const TourCourse = () => {
           <div key={course.id} className="course-card">
             <Link to={`/tour-course-detail/${course.id}`} className="course-link">
               <div className="course-info">
-                <img src={`/path/to/icons/${course.id}.svg`} alt="Tour Icon" className="course-icon" />
+                <img src={course.image} alt="Tour Icon" className="course-icon" />
                 <div className="course-title">{course.title}</div>
                 <div className="profile-section">
                 <ProfileIcon className="profile-icon"/>

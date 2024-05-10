@@ -7,7 +7,7 @@ const CourseSeason = () => {
   const defaultProfile = '따릉잉_official';  // 기본 프로필 설정
 
   const seasonCourses = [
-    { id: '1', title: '서울의 도심을 흐르는 한강', profile: defaultProfile, image: '/public/si.jpg' },
+    { id: '1', title: '서울의 도심을 흐르는 한강', profile: '따릉따릉따릉잉', image: '/public/si.jpg' },
     { id: '2', title: '벚꽃 명소 양재천, 따릉이와 함께!', profile: defaultProfile, image: '/public/yang.jpg' },
     ];
 
@@ -19,7 +19,7 @@ const CourseSeason = () => {
           <div key={course.id} className="course-card">
             <Link to={`/season-course-detail/${course.id}`} className="course-link">
               <div className="course-info">
-                <img src={`/path/to/icons/${course.id}.svg`} alt="Course Icon" className="course-icon" />
+                <img src={course.image} alt="Course Icon" className="course-icon" />
                 <div className="course-title">{course.title}</div>
                 <div className="profile-section">
                 <ProfileIcon className="profile-icon"/>
