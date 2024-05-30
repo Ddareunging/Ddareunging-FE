@@ -1,1 +1,40 @@
+name: Deploy to AWS Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 push가 발생하면 실행됩니다.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # 작업을 실행할 환경
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2  # 코드 체크아웃
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # 프로젝트에 맞는 Node.js 버전을 설정
+
+    - name: Install Dependencies
+      run: npm install  # 의존성 설치
+
+    - name: Build
+      run: npm run build  # 빌드 실행
+
+    - name: Deploy to AWS Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v18  # AWS Elastic Beanstalk에 배포
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}  # GitHub Secrets에 저장된 AWS 접근 키
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: "your-app-name"  # Elastic Beanstalk 애플리케이션 이름
+        environment_name: "your-environment-name"  # Elastic Beanstalk 환경 이름
+        region: "your-region"  # AWS 리전
+        version_label: "v${{ github.run_number }}"  # 버전 라벨
+        deployment_package: build.zip  # 배포 패키지 파일
+    
+    - name: Zip Build Files
+      run: zip -r build.zip build/
 

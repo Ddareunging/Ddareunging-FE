@@ -42,12 +42,10 @@ function HomeWeather() {
   
     const fetchWeatherData = async (latitude, longitude) => {
       try {
-        console.log('test1');
         const url = `https://ddareunging.sepnon3.shop/home/weather?lat=${latitude}&lng=${longitude}`;
-        console.log('test2');
         const response = await fetch(url);
-        console.log('test3');
         const data = await response.json();
+        console.log("Response Data:", data);
         if (data.message === 'OK') {
           const newWeatherData = {
             location: `${data.address[0]} ${data.address[1]}`,
@@ -146,7 +144,7 @@ function HomeWeather() {
 
 
   const getCautionMessage = (precipitation) => {
-    if (precipitation > 0) {
+    if (precipitation> 0) {
       return '비가 와서 미끄러우니 조심하세요.';
     } else {
       const currentHour = new Date().getHours();
@@ -177,7 +175,7 @@ function HomeWeather() {
           <div className="pollutionDetail">
             <img src={getFineDustIcon(weatherData.airQuality.pm10Status)} alt="Fine Dust Status" />
             <span style={{ color: getColorForStatus(weatherData.airQuality.pm10Status), fontSize: '24px', fontFamily: 'Pretendard', fontWeight: '700', wordWrap: 'break-word' }}>{weatherData.airQuality.pm10}</span>
-            <span style={{ color: '#37593E', fontSize: '13px', fontFamily: 'Pretendard', fontWeight: '700', wordWrap: 'break-word' }}>미세</span>
+            <span style={{ color: '#37593E', fontSize: '13px', fontFamily: 'Pretendard', fontWeight: '700', wordWrap: 'break-word' }}>미세c처닞</span>
           </div>
           <div className="pollutionDetail">
             <img src={getUltraFineDustIcon(weatherData.airQuality.pm25Status)} alt="Ultra Fine Dust Status" />
